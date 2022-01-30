@@ -1,0 +1,5 @@
+.DS_Store
+**/.fdk/
+**/test_data/
+**/coverage/
+**/.report.json

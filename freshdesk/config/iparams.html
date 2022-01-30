@@ -1,0 +1,96 @@
+<html>
+<head>
+  <title>ASANA APP</title>
+</head>
+
+<style>
+
+.input-div {
+  padding-bottom : 13px;
+}
+
+</style>
+
+<script src="https://static.freshdev.io/fdk/2.0/assets/fresh_client.js"></script>
+<link rel='stylesheet' type='text/css' href='https://static.freshdev.io/fdk/2.0/assets/freshdesk.css'>
+
+<body>
+  <div class='input-div'>
+    <label>Enter your workspace: </label></br>
+    <select id='workspace'><option disabled selected="selected">Choose a workspace</option></select>
+  </div>
+  <div class='input-div'>
+    <label>Enter your project: </label></br>
+    <select id='project'></select>
+  </div>
+</body>
+
+<script>
+  const URL_project = "https://app.asana.com/api/1.0/projects";
+  const URL_workspace = "https://app.asana.com/api/1.0/workspaces";
+
+  function getConfigs(savedConfigs) {
+    window.savedConfigs = savedConfigs;
+  }
+
+  function postConfigs() {
+    return {
+      asana_details : {
+        workspace_name: document.querySelector('#workspace option:selected').value,
+        workspace_id  : document.querySelector('#workspace option:selected').getAttribute('id'),
+        project_name  : document.querySelector('#project option:selected').value,
+        project_id    : document.querySelector('#project option:selected').getAttribute('id')
+      }
+    }
+  }
+
+  function validate() {
+    return true;
+  }
+
+  function project_api_call(workspace) {
+    client.request.get(`${URL_project}?workspace=${workspace}`, {
+      headers: {  "Authorization": "Bearer <%= access_token %>" },
+      isOAuth: true
+    })
+    .then(function(data) {
+      JSON.parse(data.response).data.forEach(function(project) {
+        document.getElementById('project').insertAdjacentHTML('beforeend', `<option id=${project.id}>${project.name}</option>`);
+      });
+      if (typeof(savedConfigs) != "undefined") {
+        document.getElementById('project').value = savedConfigs.asana_details.project_name;
+      }
+    });
+  }
+
+  function workspace_api_call() {
+    client.request.get(URL_workspace, {
+      headers: {  "Authorization": "Bearer <%= access_token %>" },
+      isOAuth: true
+    })
+    .then(function(data) {
+      JSON.parse(data.response).data.forEach(function(workspace) {
+        document.getElementById('workspace').insertAdjacentHTML('beforeend', `<option id=${workspace.id}>${workspace.name}</option>`);
+      });
+      if (typeof(savedConfigs) != "undefined") {
+        document.getElementById('workspace').value = savedConfigs.asana_details.workspace_name;
+
+        // Manually triggering the change event on the element
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent('change', true, false);
+        document.getElementById('workspace').dispatchEvent(event);
+      }
+    });
+  }
+
+
+  app.initialized().then(function(client) {
+    window.client = client;
+      document.getElementById('workspace').addEventListener('change', function (e) {
+      project_api_call(e.target.selectedOptions.getAttribute('id'));
+    });
+
+    workspace_api_call();
+  });
+</script>
+</html>
