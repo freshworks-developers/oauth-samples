@@ -1,13 +1,19 @@
 {
-  "platform-version": "2.2",
+  "platform-version": "2.3",
   "product": {
-    "freshdesk": {"events": {
+    "freshdesk": {
+      "events": {
         "onTicketCreate": {
           "handler": "onTicketCreateHandler"
         }
-      }}
+      }
+    }
   },
-  "whitelisted-domains": [
-    "https://app.asana.com"
-  ]
+  "requests": {
+    "createAsanaTask": {}
+  },
+  "engines": {
+    "node": "18.15.0",
+    "fdk": "9.0.2"
+  }
 }

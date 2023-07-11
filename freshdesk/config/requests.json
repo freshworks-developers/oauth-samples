@@ -1,0 +1,16 @@
+{
+  "createAsanaTask": {
+    "schema": {
+      "method": "POST",
+      "host": "app.asana.com",
+      "path": "/api/1.0/workspaces/<%= workspace_id %>/tasks?name=<%= ticket_subject %>&projects=<%= project_id %>",
+      "headers": {
+        "Authorization": "Bearer <%= access_token %>",
+        "Content-Type": "application/json"
+      }
+    },
+    "options": {
+      "isOAuth": true
+    }
+  }
+}

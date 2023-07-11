@@ -13,24 +13,17 @@ exports = {
  * Subject of the ticket is an attribute of ticket object in the payload from the event trigger.
  */
 
-  onTicketCreateHandler : function(payload) {
-    $request.post('https://app.asana.com/api/1.0/workspaces/'
-    + payload.iparams.asana_details.workspace_id
-    + '/tasks?name=' + payload.data.ticket.subject
-    + '&projects=' + payload.iparams.asana_details.project_id, {
-      headers : {
-        'Authorization' : 'Bearer <%= access_token %>' // Here, access_token is passed safely which is a secure installation parameter
-      },
-      isOAuth : true,
-      json: {}
-    })
-
-    .then(function(data)  {
-      console.log('Successfully created task in asana' + JSON.stringify(data));
-    },
-
-    function(err) {
-      console.log('Unable to create task in asana' + JSON.stringify(err));
-    });
+  onTicketCreateHandler: async function (payload) {
+    try {
+      const context = {
+        workspace_id: payload.iparams.asana_details.workspace_id,
+        ticket_subject: payload.data.ticket.subject,
+        project_id: payload.iparams.asana_details.project_id,
+        access_token: '<%= access_token %>'
+      };
+      await $request.invokeTemplate("createAsanaTask", { context });
+    } catch (error) {
+      // handle error
+    }
   }
 };
