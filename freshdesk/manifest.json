@@ -1,13 +1,25 @@
 {
-  "platform-version": "2.2",
-  "product": {
-    "freshdesk": {"events": {
-        "onTicketCreate": {
-          "handler": "onTicketCreateHandler"
+  "platform-version": "3.0",
+  "modules": {
+    "common": {
+      "requests": {
+        "create_asana_task": {},
+        "create_github_issue": {},
+        "get_asana_workspace": {},
+        "get_asana_projects": {}
+      }
+    },
+    "support_ticket": {
+      "location": {
+        "ticket_sidebar": {
+          "url": "index.html",
+          "icon": "styles/images/icon.svg"
         }
-      }}
+      }
+    }
   },
-  "whitelisted-domains": [
-    "https://app.asana.com"
-  ]
+  "engines": {
+    "node": "18.18.2",
+    "fdk": "9.1.0"
+  }
 }
