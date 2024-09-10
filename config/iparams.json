@@ -12,7 +12,7 @@
     "required": true,
     "secure": false,
     "events": [{
-      "change": "getAsanaWorkspaces"
+      "change": "debouncedGetAsanaWorkspaces"
     }]
   },
   "asana_workspace": {
@@ -22,7 +22,7 @@
     "options": [""],
     "default_value": "",
     "events": [{
-      "change": "getAsanaProjects"
+      "change": "debouncedGetAsanaProjects"
     }]
   },
   "asana_projects": {
