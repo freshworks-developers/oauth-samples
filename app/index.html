@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Integration with GitHub and Asana using OAuth</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <!-- Crayons CSS to use Crayons components -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/css/crayons-min.css">
+
+    <!-- Crayons JavaScript to use Crayons components -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/dist/crayons/crayons.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/dist/crayons/crayons.js"></script>
+
+    <!-- Mandatory: Freshworks developer platform scripts to render and working of the app -->
+    <script src="{{{appclient}}}"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="fw-type-h4">Multi OAuth sample</div>
+
+      <!-- Dropdown to list Asana OAuth accounts -->
+      <fw-select label="Select Asana Account" id="asanaAccountSelect" required>
+        <fw-select-option value="" disabled selected>Select an account</fw-select-option>
+      </fw-select>
+
+      <!-- Two input fields and a submit button to get the title for the Asana task and GitHub issue to be created -->
+      <fw-input type="text" label="Asana Task Name" id="inputAsanaTitle" placeholder="Enter Asana task name" required></fw-input>
+      <fw-input type="text" label="GitHub Issue Title" id="inputGithubTitle" placeholder="Enter GitHub issue title" required></fw-input>
+      <fw-button id="btnSubmit" color="primary">Submit</fw-button>
+    </div>
+  </body>
+
+  <!-- Custom JavaScript code for the app functionality -->
+  <script defer src="scripts/app.js"></script>
+</html>

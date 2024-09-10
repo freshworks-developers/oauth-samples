@@ -4,3 +4,4 @@
 **/coverage/
 **/.report.json
 **/log/
+**/dist/

@@ -1,0 +1,42 @@
+{
+  "integrations": {
+    "asana": {
+      "display_name": "Asana",
+      "client_id": "YOUR_CLIENT_ID",
+      "client_secret": "YOUR_CLIENT_SECRET",
+      "authorize_url": "https://<%= oauth_iparams.host %>/-/oauth_authorize",
+      "token_url": "https://<%= oauth_iparams.host %>/-/oauth_token",
+      "options": {
+        "scope": "default"
+      },
+      "token_type": "account",
+      "oauth_iparams": {
+        "host": {
+          "display_name": "host",
+          "description": "Please enter your shop name",
+          "type": "text",
+          "required": true
+        }
+      }
+    },
+    "github": {
+      "display_name": "GitHub",
+      "client_id": "YOUR_CLIENT_ID",
+      "client_secret": "YOUR_CLIENT_SECRET",
+      "authorize_url": "https://<%= oauth_iparams.host %>/login/oauth/authorize",
+      "token_url": "https://<%= oauth_iparams.host %>/login/oauth/access_token",
+      "options": {
+        "scope": "repo"
+      },
+      "token_type": "account",
+      "oauth_iparams": {
+        "host": {
+          "display_name": "host",
+          "description": "Please enter your shop name",
+          "type": "text",
+          "required": true
+        }
+      }
+    }
+  }
+}

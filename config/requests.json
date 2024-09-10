@@ -33,13 +33,10 @@
     "schema": {
       "method": "GET",
       "host": "app.asana.com",
-      "path": "/api/1.0/projects",
+      "path": "/api/1.0/workspaces/1199978845655296/projects",
       "headers": {
         "Authorization": "Bearer <%= access_token %>",
         "Content-Type": "application/json"
-      },
-      "query": {
-        "workspace": "<%= context.workspace %>"
       }
     },
     "options": {
