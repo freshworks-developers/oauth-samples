@@ -1,5 +1,5 @@
 {
-  "platform-version": "3.0",
+  "platform-version": "3.1",
   "modules": {
     "common": {
       "requests": {
@@ -7,6 +7,14 @@
         "create_github_issue": {},
         "get_asana_workspace": {},
         "get_asana_projects": {}
+      },
+      "functions": {
+        "createGitHubIssue": {
+          "timeout": 20
+        },
+        "getOAuthAccounts": {
+          "timeout": 20
+        }
       }
     },
     "support_ticket": {
