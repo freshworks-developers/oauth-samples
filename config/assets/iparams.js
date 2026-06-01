@@ -1,23 +1,19 @@
-let client
+let client;
+
 init();
 
 async function init() {
   client = await app.initialized();
+  debouncedGetAsanaWorkspaces();
 }
 
 function getAsanaWorkspaces() {
-  console.log('getAsanaWorkspaces');
-  client.request.invokeTemplate('get_asana_workspace', {
-    options: { account: 'default' }
-  })
+  client.request
+    .invokeTemplate('get_asana_workspace', { options: { account: 'default' } })
     .then(function (data) {
-      console.log('getAsanaWorkspaces', data);
-      let workspaces = JSON.parse(data.response);
-      const values = [];
-      workspaces.data.map(workspace => {
-        values.push(workspace.gid);
-      });
-      utils.set('asana_workspace', {values: values});
+      const workspaces = JSON.parse(data.response);
+      const values = workspaces.data.map((workspace) => workspace.gid);
+      utils.set('asana_workspace', { values });
     })
     .catch(function (error) {
       console.error('getAsanaWorkspaces', error);
@@ -25,22 +21,15 @@ function getAsanaWorkspaces() {
 }
 
 function getAsanaProjects() {
-  client.request.invokeTemplate('get_asana_projects', {
-    options: {
-      account: 'default',
-      context: {
-        workspace: utils.get('asana_workspace')
-      }
-     }
-  })
+  client.request
+    .invokeTemplate('get_asana_projects', {
+      options: { account: 'default' },
+      context: { workspace: utils.get('asana_workspace') }
+    })
     .then(function (data) {
-      console.log('getAsanaProjects', data);
-      let projects = JSON.parse(data.response);
-      const values = [];
-      projects.map(project => {
-        values.push(project.gid);
-      });
-      utils.set('asana_projects', {values: values});
+      const projects = JSON.parse(data.response);
+      const values = projects.data.map((project) => project.gid);
+      utils.set('asana_projects', { values });
     })
     .catch(function (error) {
       console.error('getAsanaProjects', error);
@@ -48,26 +37,24 @@ function getAsanaProjects() {
 }
 
 function debounce(callback, delay) {
-    let timeoutId;
-
-    return function(...args) {
-        // If there's a previous scheduled callback, clear it
-        if (timeoutId) {
-            clearTimeout(timeoutId);
-        }
-
-        // Schedule the callback to be called after the specified delay
-        timeoutId = setTimeout(() => {
-            callback(...args);
-        }, delay);
-    };
+  let timeoutId;
+  return function debounced(...args) {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => callback(...args), delay);
+  };
 }
 
-// Wrap the functions with debounce
+const runGetAsanaWorkspaces = debounce(getAsanaWorkspaces, 500);
+const runGetAsanaProjects = debounce(getAsanaProjects, 500);
+
 function debouncedGetAsanaWorkspaces() {
-  debounce(getAsanaWorkspaces, 500);
+  runGetAsanaWorkspaces();
 }
 
+// Referenced from config/iparams.json asana_workspace change event
+// eslint-disable-next-line no-unused-vars
 function debouncedGetAsanaProjects() {
-  debounce(getAsanaProjects, 500);
+  runGetAsanaProjects();
 }

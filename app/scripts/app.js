@@ -6,82 +6,51 @@ async function init() {
 }
 
 async function setupApp() {
-  console.log(await client.iparams.get());
   try {
-    let result = await client.request.invoke('getOAuthAccounts', { oauthName: 'asana' });
+    const result = await client.request.invoke('getOAuthAccounts', { oauthName: 'asana' });
     const asanaAccountSelect = document.getElementById('asanaAccountSelect');
-    const oauthNames = [];
-  
-    // Dynamically add options to the dropdown with Asana OAuth accounts
-    result.response.forEach(account => {
-      oauthNames.push({
-        value: account,
-        text: account
-      })
-    });
-    
-    asanaAccountSelect.options = oauthNames;
+    asanaAccountSelect.options = result.response.map((account) => ({
+      value: account,
+      text: account
+    }));
 
-    const btnSubmit = document.getElementById('btnSubmit');
-    btnSubmit.addEventListener('click', async function () {
+    document.getElementById('btnSubmit').addEventListener('fwClick', async function () {
       const asanaTitle = document.getElementById('inputAsanaTitle').value;
       const githubTitle = document.getElementById('inputGithubTitle').value;
-
       await createAsanaTaskAndGitHubIssue(asanaTitle, githubTitle);
     });
   } catch (error) {
-    console.error("Error: Failed to get credentials");
-    console.error(error);
+    console.error('Failed to load OAuth accounts', error);
   }
 }
 
-/**
- * 
- * @param {String} asanaTitle - A title for the Asana task
- * @param {String} githubTitle - A title for the GitHub issue
- * @returns {Promise<String>}
- */
 async function createAsanaTaskAndGitHubIssue(asanaTitle, githubTitle) {
   try {
     await createAsanaTask(asanaTitle);
-    try {
-      await createGitHubIssue(githubTitle);
-
-      client.interface.trigger('showNotify', {
-        type: 'success',
-        message: 'Asana task and GitHub issue created successfully!'
-      });  
-    } catch (error) {
-      console.error("Error: Failed to create github issue");
-      console.error(error);
-    }
+    await createGitHubIssue(githubTitle);
+    await client.interface.trigger('showNotify', {
+      type: 'success',
+      message: 'Asana task and GitHub issue created successfully.'
+    });
   } catch (error) {
-    console.error("Error: Failed to create asana ticket");
-    console.error(error);
-  } 
+    console.error('Failed to create Asana task or GitHub issue', error);
+    await client.interface.trigger('showNotify', {
+      type: 'danger',
+      message: 'Could not create the Asana task or GitHub issue.'
+    });
+  }
 }
 
-/**
- * 
- * @param {String} title - A title for the Asana task
- * @returns {Promise<String>}
- */
 async function createAsanaTask(title) {
-  const AsanaProjectId = "12345";
-  const AsanaWorkspaceId = "123456";
-
+  const iparams = await client.iparams.get();
   const desiredAsanaAccount = document.getElementById('asanaAccountSelect').value;
-  console.log(desiredAsanaAccount);
 
   return client.request.invokeTemplate('create_asana_task', {
-    options: {
-      account: desiredAsanaAccount
-    },
+    options: { account: desiredAsanaAccount },
     body: JSON.stringify({
       data: {
-        projects: [AsanaProjectId],
-        workspace: AsanaWorkspaceId,
-        parent: "null",
+        projects: [iparams.asana_projects],
+        workspace: iparams.asana_workspace,
         name: title,
         completed: false
       }
@@ -89,13 +58,6 @@ async function createAsanaTask(title) {
   });
 }
 
-/**
- * 
- * @param {String} title - A title for the GitHub issue
- * @returns {Promise<String>}
- */
-async function createGitHubIssue(title) {    
-  return client.request.invoke('createGitHubIssue', {
-    "title": title
-  });
+async function createGitHubIssue(title) {
+  return await client.request.invoke('createGitHubIssue', { title });
 }

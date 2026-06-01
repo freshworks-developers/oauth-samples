@@ -1,35 +1,33 @@
 {
   "github_username": {
-    "display_name": "GitHub Username",
-    "description": "Enter your GitHub username",
+    "display_name": "GitHub username",
+    "description": "GitHub organization or user that owns the target repository.",
     "type": "text",
     "required": true
   },
   "github_repository": {
-    "display_name": "GitHub Repository",
-    "description": "Enter the GitHub repository to create issues in",
+    "display_name": "GitHub repository",
+    "description": "Repository name (without owner) where issues should be created.",
     "type": "text",
-    "required": true,
-    "secure": false,
-    "events": [{
-      "change": "debouncedGetAsanaWorkspaces"
-    }]
+    "required": true
   },
   "asana_workspace": {
-    "display_name": "Asana Workspace",
-    "description": "Enter the Asana workspace to create cards in",
+    "display_name": "Asana workspace",
+    "description": "Populated after connecting Asana OAuth on the installation page.",
     "type": "dropdown",
-    "options": [""],
-    "default_value": "",
-    "events": [{
-      "change": "debouncedGetAsanaProjects"
-    }]
+    "options": ["Connect Asana OAuth to load workspaces"],
+    "default_value": "Connect Asana OAuth to load workspaces",
+    "events": [
+      {
+        "change": "debouncedGetAsanaProjects"
+      }
+    ]
   },
   "asana_projects": {
-    "display_name": "Asana Projects",
-    "description": "Enter the Asana Projects to create cards in",
-    "type": "multiselect",
-    "options": [""],
-    "default_value": [""]
+    "display_name": "Asana project",
+    "description": "Project used when creating tasks from the ticket sidebar.",
+    "type": "dropdown",
+    "options": ["Select a workspace first"],
+    "default_value": "Select a workspace first"
   }
 }

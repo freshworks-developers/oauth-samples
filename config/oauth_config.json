@@ -4,39 +4,23 @@
       "display_name": "Asana",
       "client_id": "YOUR_CLIENT_ID",
       "client_secret": "YOUR_CLIENT_SECRET",
-      "authorize_url": "https://<%= oauth_iparams.host %>/-/oauth_authorize",
-      "token_url": "https://<%= oauth_iparams.host %>/-/oauth_token",
+      "authorize_url": "https://app.asana.com/-/oauth_authorize",
+      "token_url": "https://app.asana.com/-/oauth_token",
       "options": {
         "scope": "default"
       },
-      "token_type": "account",
-      "oauth_iparams": {
-        "host": {
-          "display_name": "host",
-          "description": "Please enter your shop name",
-          "type": "text",
-          "required": true
-        }
-      }
+      "token_type": "account"
     },
     "github": {
       "display_name": "GitHub",
       "client_id": "YOUR_CLIENT_ID",
       "client_secret": "YOUR_CLIENT_SECRET",
-      "authorize_url": "https://<%= oauth_iparams.host %>/login/oauth/authorize",
-      "token_url": "https://<%= oauth_iparams.host %>/login/oauth/access_token",
+      "authorize_url": "https://github.com/login/oauth/authorize",
+      "token_url": "https://github.com/login/oauth/access_token",
       "options": {
         "scope": "repo"
       },
-      "token_type": "account",
-      "oauth_iparams": {
-        "host": {
-          "display_name": "host",
-          "description": "Please enter your shop name",
-          "type": "text",
-          "required": true
-        }
-      }
+      "token_type": "account"
     }
   }
 }

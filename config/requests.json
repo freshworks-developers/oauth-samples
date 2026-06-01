@@ -1,14 +1,14 @@
 {
   "create_asana_task": {
     "schema": {
+      "protocol": "https",
       "method": "POST",
       "host": "app.asana.com",
       "path": "/api/1.0/tasks",
       "headers": {
         "Authorization": "Bearer <%= access_token %>",
         "Content-Type": "application/json"
-      },
-      "query": {}
+      }
     },
     "options": {
       "oauth": "asana"
@@ -16,14 +16,14 @@
   },
   "get_asana_workspace": {
     "schema": {
+      "protocol": "https",
       "method": "GET",
       "host": "app.asana.com",
       "path": "/api/1.0/workspaces",
       "headers": {
         "Authorization": "Bearer <%= access_token %>",
         "Content-Type": "application/json"
-      },
-      "query": {}
+      }
     },
     "options": {
       "oauth": "asana"
@@ -31,9 +31,10 @@
   },
   "get_asana_projects": {
     "schema": {
+      "protocol": "https",
       "method": "GET",
       "host": "app.asana.com",
-      "path": "/api/1.0/workspaces/1199978845655296/projects",
+      "path": "/api/1.0/workspaces/<%= context.workspace %>/projects",
       "headers": {
         "Authorization": "Bearer <%= access_token %>",
         "Content-Type": "application/json"
@@ -45,17 +46,17 @@
   },
   "create_github_issue": {
     "schema": {
+      "protocol": "https",
       "method": "POST",
       "host": "api.github.com",
       "path": "/repos/<%= iparam.github_username %>/<%= iparam.github_repository %>/issues",
       "headers": {
-        "Authorization": "token <%= access_token %>",
+        "Authorization": "Bearer <%= access_token %>",
         "Content-Type": "application/json",
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
-        "User-Agent": "GitHub-Freshservice app"
-      },
-      "query": {}
+        "User-Agent": "Freshworks-OAuth-Sample"
+      }
     },
     "options": {
       "oauth": "github"

@@ -1,5 +1,9 @@
 {
-  "platform-version": "3.1",
+  "platform-version": "3.0",
+  "app": {
+    "tracking_id": "0auth5ample5freshd3sk1",
+    "start_time": "2026-06-01T00:00:00.000Z"
+  },
   "modules": {
     "common": {
       "requests": {
@@ -27,7 +31,7 @@
     }
   },
   "engines": {
-    "node": "18.18.2",
-    "fdk": "9.1.0"
+    "node": "24.11.0",
+    "fdk": "10.1.2"
   }
 }

@@ -1,27 +1,47 @@
-# OAuth Sample App with Asana and GitHub
+# OAuth samples — Asana and GitHub
 
-This app creates a task in Asana and a GitHub issue at once from the ticket sidebar.
+Freshdesk ticket-sidebar app that creates an **Asana task** and a **GitHub issue** from one form, using **account-level OAuth** for both integrations.
 
-This app demonstrates the following features
+## Real-world use case
 
-1. [OAuth 2.0 - account level OAuth](https://developers.freshworks.com/docs/app-sdk/v3.0/common/advanced-interfaces/request-method/oauth/).
-2. Making an API request through [Request Method](https://developers.freshworks.com/docs/app-sdk/v3.0/common/advanced-interfaces/request-method/) using OAuth access token to authenticate.
-3. [Serverless invocation method (SMI)](https://developers.freshworks.com/docs/app-sdk/v3.0/common/smi-apps/).
-4. Using a [installation parameters](https://developers.freshworks.com/docs/app-sdk/v3.0/common/app-settings/app-installation-page/installation-page/) to dynamically populate dependent fields (workspace, project) from Asana and fill the GitHub repository name.
+When support escalates a bug, agents often duplicate work in a project tracker and a code repository. This sample shows how to **fan out one ticket action** into Asana (for PM visibility) and GitHub (for engineering) with secure OAuth tokens—no shared passwords in iparams.
+
+## Features demonstrated
+
+- Multi-provider OAuth 2.0 (Asana + GitHub) at account level
+- Request templates with OAuth access tokens
+- Server method invocation (`getOAuthAccounts`, `createGitHubIssue`)
+- Dynamic installation fields (Asana workspace and project loaded after OAuth)
 
 ## Prerequisites
 
-1. It is mandatory to have a Asana account and a GitHub account.
-2. You must have [an OAuth app registered](https://developers.asana.com/docs/oauth) in Asana and [in GitHub](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app).
+- Freshdesk dev account and [FDK 10.x](https://developers.freshworks.com/docs/app-sdk/v3.0/) on **Node.js 24.x**
+- [Asana OAuth app](https://developers.asana.com/docs/oauth) and [GitHub OAuth app](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app)
+- Replace placeholders in `config/oauth_config.json` with your client IDs and secrets
 
-## Installation
+## Installation parameters
 
-1. Download the app from [here](https://github.com/freshworks-developers/oauth-samples/).
-2. [Upload and install the app in your account](https://developers.freshworks.com/docs/getting-started/freshdesk/deploy-first-app/).
-3. Open any ticket details page and open the app in the sidebar.
-4. Choose an Asana account from the dropdown and enter the task name and GitHub issue title.
-5. Click on the **Submit** button and notice the task and issue created in Asana and GitHub.
+| Parameter | Description |
+|-----------|-------------|
+| `github_username` / `github_repository` | Target repo for new issues |
+| `asana_workspace` / `asana_projects` | Workspace and project GIDs (populated dynamically after Asana OAuth) |
+
+During install, connect both OAuth accounts. The installation page loads Asana workspaces and projects via `config/assets/iparams.js`.
+
+## Setup and testing
+
+1. Configure OAuth credentials in `config/oauth_config.json`.
+2. Run `fdk validate` and `fdk run` from this folder.
+3. Complete installation OAuth flows and iparams at `http://localhost:10001/custom_configs`.
+4. Open a ticket sidebar, pick an Asana account, enter task and issue titles, and submit.
+
+## Project structure
+
+- `manifest.json` — Platform 3.0 hybrid app (`support_ticket` + common SMI/requests)
+- `app/` — Crayons ticket sidebar UI
+- `server/server.js` — OAuth account listing and GitHub issue SMI
+- `config/` — OAuth config, request templates, dynamic iparams
 
 ## Support
 
-If you have any questions or feedback, please contact us at support@freshworks.com or visit our [developer forum](https://community.freshworks.com/).
+Questions: [Freshworks developer community](https://community.freshworks.dev/).
