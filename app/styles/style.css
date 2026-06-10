@@ -1,0 +1,179 @@
+:root {
+  --asana-coral: #f06a6a;
+  --asana-coral-dark: #e05656;
+  --asana-ink: #151b26;
+  --asana-muted: #6d6e6f;
+  --asana-surface: #fff7f6;
+  --asana-border: rgba(240, 106, 106, 0.22);
+  --asana-gradient: linear-gradient(135deg, #ffb900 0%, #f95d8f 55%, #f95353 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--asana-ink);
+  background: #fff;
+}
+
+.asana-root {
+  min-height: 100%;
+}
+
+.asana-loading-text {
+  margin: 16px;
+  color: var(--asana-muted);
+  font-size: 13px;
+}
+
+.asana-app {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.asana-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--asana-surface);
+  border: 1px solid var(--asana-border);
+}
+
+.asana-header-copy h1 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.asana-header-copy p {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: var(--asana-muted);
+}
+
+.asana-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.asana-field-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--asana-muted);
+  margin-bottom: 4px;
+}
+
+.asana-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.asana-action-btn {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--asana-gradient);
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.asana-action-btn:hover:not(:disabled) {
+  opacity: 0.92;
+}
+
+.asana-action-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.asana-btn-primary {
+  --fw-color-primary: var(--asana-coral);
+}
+
+.asana-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 360px;
+  overflow: auto;
+}
+
+.asana-task-card {
+  border: 1px solid var(--asana-border);
+  border-radius: 10px;
+  padding: 10px;
+  background: #fff;
+}
+
+.asana-task-card.is-done {
+  opacity: 0.72;
+}
+
+.asana-task-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.asana-task-meta {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: var(--asana-muted);
+}
+
+.asana-task-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--asana-coral);
+  text-decoration: none;
+}
+
+.asana-task-link:hover {
+  text-decoration: underline;
+}
+
+.asana-empty {
+  padding: 16px 12px;
+  border-radius: 10px;
+  border: 1px dashed var(--asana-border);
+  color: var(--asana-muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+.asana-created-link {
+  margin-top: 4px;
+  font-size: 12px;
+}
+
+.asana-created-link a {
+  color: var(--asana-coral);
+  font-weight: 600;
+}
+
+fw-button[color='primary'] {
+  --fw-color-primary: var(--asana-coral);
+  --fw-color-primary-hover: var(--asana-coral-dark);
+}
+
+fw-tabs {
+  --fw-tabs-active-color: var(--asana-coral);
+}

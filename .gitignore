@@ -1,7 +1,12 @@
 .DS_Store
-**/.fdk/
-**/test_data/
-**/coverage/
+**/.fdk/**
+**/coverage/**
 **/.report.json
-**/log/
-**/dist/
+**/.vscode/**
+**/node_modules/**
+**/test_data/**
+**/dist/**
+**/config/oauth_config.json
+**/config/iparams_test_data.json
+**/log/**/*
+.meta

@@ -8,7 +8,9 @@
         "Authorization": "Bearer <%= access_token %>",
         "Content-Type": "application/json"
       },
-      "query": {}
+      "query": {
+        "opt_fields": "gid,name,permalink_url,projects,assignee,due_on"
+      }
     },
     "options": {
       "oauth": "asana"
@@ -23,7 +25,9 @@
         "Authorization": "Bearer <%= access_token %>",
         "Content-Type": "application/json"
       },
-      "query": {}
+      "query": {
+        "opt_fields": "gid,name"
+      }
     },
     "options": {
       "oauth": "asana"
@@ -33,32 +37,18 @@
     "schema": {
       "method": "GET",
       "host": "app.asana.com",
-      "path": "/api/1.0/workspaces/1199978845655296/projects",
+      "path": "/api/1.0/workspaces/<%= context.workspace_gid %>/projects",
       "headers": {
         "Authorization": "Bearer <%= access_token %>",
         "Content-Type": "application/json"
+      },
+      "query": {
+        "opt_fields": "gid,name,archived",
+        "archived": "false"
       }
     },
     "options": {
       "oauth": "asana"
-    }
-  },
-  "create_github_issue": {
-    "schema": {
-      "method": "POST",
-      "host": "api.github.com",
-      "path": "/repos/<%= iparam.github_username %>/<%= iparam.github_repository %>/issues",
-      "headers": {
-        "Authorization": "token <%= access_token %>",
-        "Content-Type": "application/json",
-        "Accept": "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-        "User-Agent": "GitHub-Freshservice app"
-      },
-      "query": {}
-    },
-    "options": {
-      "oauth": "github"
     }
   }
 }

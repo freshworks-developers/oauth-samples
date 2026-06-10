@@ -1,33 +1,25 @@
 {
-  "github_username": {
-    "display_name": "GitHub Username",
-    "description": "Enter your GitHub username",
-    "type": "text",
-    "required": true
-  },
-  "github_repository": {
-    "display_name": "GitHub Repository",
-    "description": "Enter the GitHub repository to create issues in",
-    "type": "text",
-    "required": true,
-    "secure": false,
+  "reload_asana_lists": {
+    "display_name": "Reload Asana lists",
+    "description": "Authorize Asana OAuth at custom_configs first, then check this box to load workspaces and projects.",
+    "type": "checkbox",
     "events": [{
-      "change": "debouncedGetAsanaWorkspaces"
+      "change": "getAsanaWorkspaces"
     }]
   },
   "asana_workspace": {
     "display_name": "Asana Workspace",
-    "description": "Enter the Asana workspace to create cards in",
+    "description": "Default workspace for tasks created from tickets",
     "type": "dropdown",
     "options": [""],
     "default_value": "",
     "events": [{
-      "change": "debouncedGetAsanaProjects"
+      "change": "getAsanaProjects"
     }]
   },
   "asana_projects": {
     "display_name": "Asana Projects",
-    "description": "Enter the Asana Projects to create cards in",
+    "description": "Default project(s) for tasks created from tickets",
     "type": "multiselect",
     "options": [""],
     "default_value": [""]
